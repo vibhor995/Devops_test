@@ -1,0 +1,48 @@
+- hosts: localhost
+
+  vars_files:
+    - nginx_vars.yml
+
+  tasks:
+
+  - block:
+
+    - name: Create namespace for test
+      shell: kubectl create namespace {{ ns }}
+      args:
+        executable: /bin/bash
+
+    - name: Deploy the required deployment on minikube
+      shell: kubectl apply -f {{ deployment }} -n {{ ns }}
+      args:
+        executable: /bin/bash
+      register: status
+      until: "'created' in status.stdout"
+      delay: 5
+      retries: 5
+
+    - name: Check the status of deployment pod
+      shell: kubectl get pod -n {{ ns }} --no-headers -o custom-columns=:status.phase
+      args:
+        executable: /bin/bash
+      register: result
+      until: "'Running' in result.stdout"
+      delay: 30
+      retries: 15
+
+    - name: Get the  deployement   name.
+      shell: kubectl get deployment -n {{ ns }} -o jsonpath='{.items[0].metadata.name}'
+      register: deploy_name
+
+    - name: Expose the service of deployment
+      shell: kubectl expose deployment {{ deploy_name.stdout }} -n {{ ns }} --type=NodePort
+      args:
+        executable: /bin/bash
+      register: svc_status
+      until: "'service' and 'exposed' in svc_status.stdout"
+      delay: 5
+      retries: 10
+
+
+
+
