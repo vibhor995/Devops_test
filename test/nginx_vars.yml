@@ -1,0 +1,5 @@
+---
+
+# test example
+ns: test
+deployment: nginx.yml
