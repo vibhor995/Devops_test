@@ -5,7 +5,7 @@
   vars_files:
     - nginx_vars.yml
 
-## the  actuall task for deployment ##      
+## the  actuall task for deployment of nginx ##      
   tasks:
 
   - block:
