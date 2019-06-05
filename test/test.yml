@@ -1,4 +1,4 @@
-### nginx deplouyment ###
+## nginx deplouyment ###
 
 - hosts: localhost
 
