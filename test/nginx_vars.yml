@@ -1,5 +1,5 @@
 ---
 
-# test example variable ###
+### test example variable ###
 ns: test
 deployment: nginx.yml
