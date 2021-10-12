@@ -17,7 +17,6 @@ func TestWriteListInstance(t *testing.T) {
        t.Log("Starting unit test at " + nowString)
 
        api := &aws.Config 
-
         
        awsConnect, err := session.NewSession(api{
            Region: aws.String("us-east-2")},
@@ -31,14 +30,12 @@ func TestWriteListInstance(t *testing.T) {
            InstanceIds: []*string{aws.String("i-007170d8ee4f99dee")},
        }
 
-
        result, err :=  ec2sess.DescribeInstances(instanceInfo)
        if err != nil {
 		t.Log("Wrong instance ID or Got an error retrieving information about your Amazon EC2 instances:")
 		t.Log(err)
 		return
 	}
-
 
           
 }   
